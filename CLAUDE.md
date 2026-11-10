@@ -6,6 +6,7 @@ This is the Dingocoin NFT monorepo. Keep the three runtime components as
 independently deployable containers:
 
 - `apps/frontend` — React 19/Vite 8 frontend
+- `apps/frontend-v2` — redesigned frontend under `/v2/`, full parity with `apps/frontend`; dev runs on fake data from `apps/frontend-v2/mock` at http://localhost:3022/testing-nft-platform/v2/ (see `apps/frontend-v2/README.md`)
 - `services/link` — Express edge and Open Graph renderer
 - `services/provider` — Express API and Dingocoin chain indexer
 - `e2e` — deterministic API fixture and Playwright browser tests
@@ -31,7 +32,7 @@ MinIO data and a fixture API so it is fast and reproducible.
 service is down; the machine-local SessionStart hook only runs `--status`.
 
 CI is `.github/workflows/ci.yml`: a `unit` job (frontend lint/test/build,
-link install, provider tests) and an `e2e` job (`npm run test:e2e`). It runs on
+link install and tests, provider tests) and an `e2e` job (`npm run test:e2e`). It runs on
 pull requests and pushes to `master`. Keep it in sync with the root commands.
 
 ## Git and releases
@@ -51,6 +52,9 @@ emailed to watchers, and kept in edit history even after you change it.
   privately instead.
 - PR descriptions describe code changes and how they were tested, not
   deployment state, server inventory, or operational details.
+- Machine-specific setup (reverse proxies, fixed container addresses, host
+  names) goes in untracked `compose.override.yaml`, `.env`, and
+  `CLAUDE.local.md`, never in tracked files.
 
 Push feature branches only to the `KMSoftwareHQ` fork and open pull requests
 against `dingocoin/dingonft`. Never push directly to the Dingocoin repository or
